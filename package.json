@@ -1,0 +1,23 @@
+{
+  "name": "CSS-by-Brad",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "sass": "node-sass -w scss/ -o dist/css/ --recursive"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hansin86/CSS-by-Brad.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hansin86/CSS-by-Brad/issues"
+  },
+  "homepage": "https://github.com/Hansin86/CSS-by-Brad#readme",
+  "dependencies": {
+    "node-sass": "^4.11.0"
+  }
+}
