@@ -1,75 +1,151 @@
-@import 'variables';
-@import 'functions';
+@import "variables";
+@import "functions";
 
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    background: $light-color;
-    color: $dark-color;
-    font-family: $font-stack;
-    line-height: 1.5;
+  background: $light-color;
+  color: $dark-color;
+  font-family: $font-stack;
+  line-height: 1.5;
 }
 
 header {
-    background: $dark-color;
-    color: set-text-color($dark-color);
-    padding: 1rem;
+  background: $dark-color;
+  color: set-text-color($dark-color);
+  padding: 1rem;
 
-    h1 {
-        text-align: center;
-    }
+  h1 {
+    text-align: center;
+  }
 }
 
 .section {
-    padding: 3rem;
+  padding: 3rem;
 
-    h3 {
-        font-size: 2rem;
-    }
+  h3 {
+    font-size: 2rem;
+  }
 
-    &-a {
-        background: $primary-color;
-        color: set-text-color($primary-color);
-    }
+  &-a {
+    background: $primary-color;
+    color: set-text-color($primary-color);
+  }
 
-    &-b {
-        background: $secondary-color;
-        color: set-text-color($secondary-color);
-    }
+  &-b {
+    background: $secondary-color;
+    color: set-text-color($secondary-color);
+  }
 }
 
 %btn-shared {
-    display: inline-block;
-    padding: 0.7rem 2rem;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-    margin-top: 1rem;
+  display: inline-block;
+  padding: 0.7rem 2rem;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  margin-top: 1rem;
 }
 
 .btn {
-    &-light {
-        @extend %btn-shared;
-        background-color: $light-color;
-        color: set-text-color($light-color);
+  &-light {
+    @extend %btn-shared;
+    background-color: $light-color;
+    color: set-text-color($light-color);
 
-        &:hover {
-            @include transform(rotate(20deg));
-            background-color: darken($light-color, 10%); 
-        }
+    &:hover {
+      @include transform(rotate(20deg));
+      background-color: darken($light-color, 10%);
     }
+  }
 
-    &-dark {
-        @extend %btn-shared;
-        background-color: $dark-color;
-        color: set-text-color($dark-color);
+  &-dark {
+    @extend %btn-shared;
+    background-color: $dark-color;
+    color: set-text-color($dark-color);
 
-        &:hover {
-            @include transform(rotate(-20deg));
-            background-color: lighten($dark-color, 10%); 
-        }
+    &:hover {
+      @include transform(rotate(-20deg));
+      background-color: lighten($dark-color, 10%);
     }
+  }
+}
+
+.radial-progress {
+  position: relative;
+  $circle-background: $primary-color;
+  $circle-color: #97a71d;
+  width: 30vw;
+  height: 30vw;
+  border-radius: 50%;
+  background-color: $secondary-color;
+  // clip-path: polygon(0 0, 30vw 0vw, 30vw 15vw, 0vw 15vw);
+  clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+
+  .circle {
+    position: absolute;
+    background-color: $dark-color;
+    width: 30vw;
+    height: 30vw;
+    border-radius: 50%;
+    transform: rotate(-100deg);
+    clip-path: polygon(30vw 30vw, 0 30vw, 0 15vw, 30vw 15vw);
+  }
+
+  .fill {
+    position: absolute;
+    background-color: blue;
+    width: 30vw;
+    height: 30vw;
+    border-radius: 50%;
+    transform: rotate(-20deg);
+    clip-path: polygon(30vw 30vw, 0 30vw, 0 15vw, 30vw 15vw);
+  }
+
+  .overlay {
+    position: absolute;
+    background-color: $light-color;
+    width: 25vw;
+    height: 25vw;
+    border-radius: 50%;
+    top: 2.5vw;
+    left: 2.5vw;
+
+    .overlay-text {
+      padding-top: 20%;
+    }
+  }
+}
+
+$step: 5; // step of % for created classes
+
+$loops: round(100 / $step);
+$increment: 360 / $loops;
+$half: round($loops / 2);
+
+@for $i from 0 through $loops {
+  .progress-#{$i * $step} {
+    @if $i < $half {
+      $nextdeg: 90deg + ($increment * $i);
+      background-image: linear-gradient(
+          90deg,
+          red 50%,
+          transparent 50%,
+          transparent
+        ),
+        linear-gradient($nextdeg, green 50%, red 50%, red);
+    } @else {
+      $nextdeg: -90deg + ($increment * ($i - $half));
+      background-image: linear-gradient(
+          $nextdeg,
+          green 50%,
+          transparent 50%,
+          transparent
+        ),
+        linear-gradient(270deg, green 50%, red 50%, red);
+    }
+  }
 }
